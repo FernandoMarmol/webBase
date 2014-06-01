@@ -18,6 +18,11 @@ public interface Constants {
 	public static final String SESSION_USER = "SESSION_USER";
 	
 	/**
+	 * Request Attributes
+	 */
+	public static final String MESSAGE = "MESSAGE";
+	
+	/**
 	 * JAVASCRIPT AJAX RESULTS
 	 */
 	public static final String JS_AJAX_RESULT_INFO = "info";

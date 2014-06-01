@@ -50,12 +50,6 @@ public class UserManager extends MainManager {
 			stmt.executeUpdate();
 			stmt.close();
 			
-			String insertRequester = "INSERT INTO requesters (REQUESTER_ID, REQUESTER_EMAIL, REQUESTER_NAME) VALUES ((SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "'), '" + email + "', '" + name + "')";
-			
-			stmt = getPreparedStatement(insertRequester);
-			stmt.executeUpdate();
-			stmt.close();
-			
 			String insertProfile = "INSERT INTO users_settings (USER_ID) VALUES (SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "')";
 			
 			stmt = getPreparedStatement(insertProfile);
@@ -90,10 +84,8 @@ public class UserManager extends MainManager {
 		PreparedStatement stmt = null;
 		try {
 			String select = 
-			" SELECT users.USER_ID, USER_NAME, USER_EMAIL, EXPERT_ID, REQUESTER_ID, USER_PREFERRED_MAIN_VIEW " +  
-			" FROM users left outer join experts on users.USER_ID = experts.EXPERT_ID " +  
-					   " left outer join requesters on users.USER_ID = requesters.REQUESTER_ID " + 
-					   " left outer join users_settings on users.USER_ID = users_settings.USER_ID " +
+			" SELECT users.USER_ID, USER_NAME, USER_EMAIL  " +  
+			" FROM users left outer join users_settings on users.USER_ID = users_settings.USER_ID " +
 			" WHERE USER_EMAIL = '" + email + "' AND USER_PWD = sha1('" + pwd + "') ";
 			
 			stmt = getPreparedStatement(select);
@@ -103,16 +95,10 @@ public class UserManager extends MainManager {
 				user = new User();
 				user.setId(rs.getInt("USER_ID"));
 				user.setName(rs.getString("USER_NAME"));
+				user.setSurname(rs.getString("USER_SURNAME"));
 				user.setEmail(rs.getString("USER_EMAIL"));
 				
-				if(rs.getInt("EXPERT_ID") > 0)
-					user.setExpert(true);
-				
-				if(rs.getInt("REQUESTER_ID") > 0)
-					user.setRequester(true);
-				
 				UserSettings settings = new UserSettings();
-				//settings.setPreferredMainView(rs.getInt("USER_PREFERRED_MAIN_VIEW"));
 				
 				user.setSettings(settings);
 			}

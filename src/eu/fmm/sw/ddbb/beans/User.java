@@ -4,39 +4,22 @@ public class User {
 
 	private int id = -1;
 	private String name = "";
+	private String surname = "";
 	private String email = "";
-	
-	private boolean isExpert = false;
-	private boolean isRequester = false;
-	
-	private boolean isFirstTimeExpert = false; //indica si se acaba de registrar como experto
 	
 	private UserSettings settings;
 	
-	
-	public boolean isFirstTimeExpert() {
-		return isFirstTimeExpert;
-	}
-	public void setFirstTimeExpert(boolean isFirstTimeExpert) {
-		this.isFirstTimeExpert = isFirstTimeExpert;
-	}
 	public UserSettings getSettings() {
 		return settings;
 	}
 	public void setSettings(UserSettings settings) {
 		this.settings = settings;
 	}
-	public boolean isExpert() {
-		return isExpert;
+	public String getSurname() {
+		return surname;
 	}
-	public void setExpert(boolean isExpert) {
-		this.isExpert = isExpert;
-	}
-	public boolean isRequester() {
-		return isRequester;
-	}
-	public void setRequester(boolean isRequester) {
-		this.isRequester = isRequester;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 	public int getId() {
 		return id;
