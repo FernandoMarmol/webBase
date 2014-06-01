@@ -1,18 +1,14 @@
 package eu.fmm.sw.tags;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.lang.LanguageWorker;
 
 public class LanguageTag extends TagSupport {
-
-	private static ResourceBundle language = null;
 	
 	private String key = null;
 	
@@ -22,16 +18,6 @@ public class LanguageTag extends TagSupport {
 
 	public void setKey(String key) {
 		this.key = key;
-	}
-
-	
-	public static void initLanguage(PageContext pageContext){
-		try{
-			language = ResourceBundle.getBundle(pageContext.getServletContext().getInitParameter(Constants.LANG_PACKAGE) + ".translation", Locale.getDefault());
-		}
-		catch(Exception e){
-			language = ResourceBundle.getBundle(pageContext.getServletContext().getInitParameter(Constants.LANG_PACKAGE) + ".translation", Locale.ENGLISH);
-		}
 	}
 	
 	@Override
@@ -55,16 +41,18 @@ public class LanguageTag extends TagSupport {
 		return super.doStartTag();
 	}
 	
+	/**
+	 * Devuelve el mensaje si existe, y si no, devuelve la clave introducida
+	 * @param key
+	 * @param pageContext
+	 * @return
+	 */
 	public static String getMessage(String key, PageContext pageContext){
-		
-		if(language == null)
-			initLanguage(pageContext);
-			
 		try{
-			return language.getString(key);
+			return LanguageWorker.getMessage(key);
 		}
 		catch(Exception e){
-			return key + " - Does not exist for language " + language.getLocale();
+			return key;
 		}
 	}
 

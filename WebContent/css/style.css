@@ -119,7 +119,7 @@ div#bodyFooter{
 /*******************************************************************************************/
 /*************************************** CAPA TIPO 1 ***************************************/
 /*******************************************************************************************/
-div.type1 {
+div.form1 {
 	position: static; 
 	border: 2px solid #BA7F00; 
 	display: block; 
@@ -138,14 +138,14 @@ div.type1 {
 	box-shadow: -6px -6px 0px #E5CD99;
 }
 
-div.type1:hover {
+div.form1:hover {
 	background: #FFF7E4;
 	-webkit-box-shadow: -6px -6px 0px #E5CD99; 
 	-moz-box-shadow: -6px -6px 0px #E5CD99;
 	box-shadow: -6px -6px 0px #E5CD99;
 }
 
-div.type1 button, input[type=submit] {
+div.form1 button, input[type=submit] {
 	padding: 6px 10px;
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -160,28 +160,28 @@ div.type1 button, input[type=submit] {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(#E5CD99));
 }
 
-div.type1 button.subButton, input[type=submit].subButton {
+div.form1 button.subButton, input[type=submit].subButton {
 	padding: 3px 5px;
 	font-size: 0.7em;
 }
 
-div.type1 button:hover, input[type=submit]:hover {
+div.form1 button:hover, input[type=submit]:hover {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(#E5CD99));
 	-webkit-box-shadow: 0px 0px 1px 2px #E5CD99;
 }
 
-div.type1 button:active, input[type=submit]:active {
+div.form1 button:active, input[type=submit]:active {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999999), to(#CCCCCC));
 }
 
-div.type1 button:disabled, input[type=submit]:disabled {
+div.form1 button:disabled, input[type=submit]:disabled {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(#E5CD99));
 	-webkit-box-shadow: 0px 0px 0px 0px;
 }
 
-div.type1 input[type=text]::-webkit-input-placeholder { color: #E5CD99; }
-div.type1 input[type=password]::-webkit-input-placeholder { color: #E5CD99; }
-div.type1 input[type=text], input[type=password] {
+div.form1 input[type=text]::-webkit-input-placeholder { color: #E5CD99; }
+div.form1 input[type=password]::-webkit-input-placeholder { color: #E5CD99; }
+div.form1 input[type=text], input[type=password] {
 	border: 2px #E5CD99 solid;
 	padding-left: 1%;
 	padding-right: 1%;

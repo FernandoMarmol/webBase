@@ -1,11 +1,19 @@
 package eu.fmm.sw.ddbb.beans;
 
+import eu.fmm.sw.web.annotations.TextField;
+
 public class User {
 
 	private int id = -1;
+	
+	@TextField (placeholder = "user.name.placeholder")
 	private String name = "";
+	@TextField (placeholder = "user.surname.placeholder")
 	private String surname = "";
+	@TextField (placeholder = "user.email.placeholder")
 	private String email = "";
+	@TextField(isPassword = true, placeholder = "user.password.placeholder")
+	private String password = "";
 	
 	private UserSettings settings;
 	

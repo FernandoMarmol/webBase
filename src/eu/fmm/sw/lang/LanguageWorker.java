@@ -16,8 +16,12 @@ public class LanguageWorker {
 		}
 	}
 
+	/**
+	 * Devuelve el mensaje si existe, y si no, devuelve la clave introducida
+	 * @param key
+	 * @return
+	 */
 	public static String getMessage(String key){
-		
 		if(language == null)
 			init();
 			
@@ -25,7 +29,7 @@ public class LanguageWorker {
 			return language.getString(key);
 		}
 		catch(Exception e){
-			return key + " - Does not exist for language " + language.getLocale();
+			return key;
 		}
 	}
 	
