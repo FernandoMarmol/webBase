@@ -8,9 +8,9 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import eu.fmm.sw.Constants;
+import eu.fmm.sw.beans.UserData;
+import eu.fmm.sw.beans.UserSettings;
 import eu.fmm.sw.ddbb.MainManager;
-import eu.fmm.sw.ddbb.beans.User;
-import eu.fmm.sw.ddbb.beans.UserSettings;
 
 public class UserManager extends MainManager {
 	
@@ -78,8 +78,8 @@ public class UserManager extends MainManager {
 	 * @param pwd
 	 * @return - el usuario o null si no ha sido posible
 	 */
-	public User getUser(String email, String pwd){
-		User user = null;
+	public UserData getUser(String email, String pwd){
+		UserData user = null;
 		
 		PreparedStatement stmt = null;
 		try {
@@ -92,7 +92,7 @@ public class UserManager extends MainManager {
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.first()){
-				user = new User();
+				user = new UserData();
 				user.setId(rs.getInt("USER_ID"));
 				user.setName(rs.getString("USER_NAME"));
 				user.setSurname(rs.getString("USER_SURNAME"));

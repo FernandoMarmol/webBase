@@ -3,7 +3,7 @@
 
 <%@ page import="eu.fmm.sw.servlets.UserServlet"%>
 <%@ page import="eu.fmm.sw.Constants"%>
-<%@ page import="eu.fmm.sw.ddbb.beans.User"%>
+<%@ page import="eu.fmm.sw.beans.UserData"%>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,7 @@
 		<div id="bodyContent">
 			<%--Cuerpo --%>
 			
-			<htmlBuilder:form bean="<%=new User()%>" action="<%=UserServlet.PATH_CREATE%>"/>
+			<htmlBuilder:form bean="<%=new UserData()%>" action="<%=UserServlet.PATH_CREATE%>"/>
 			
 			<br>
 			<button class="buttonNormal" onclick="javascript:showMessage('<%=Constants.JS_AJAX_RESULT_INFO %>', $().jquery);">Versión Jquery</button>

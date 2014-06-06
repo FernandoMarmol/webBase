@@ -19,7 +19,7 @@ import eu.fmm.sw.common.beans.Message;
 
 //Sets the path to base URL + /hello
 @Path("/Hello")
-public class Hello {
+public class HelloServices {
 
 	// This method is called if TEXT_PLAIN is request
 	@GET
