@@ -2,6 +2,16 @@ delimiter $$
 
 CREATE DATABASE `base` /*!40100 DEFAULT CHARACTER SET utf8 */$$
 
+
+delimiter $$
+
+CREATE TABLE `users` (
+  `USER_ID` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario',
+  `USER_IS_OFF` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Indica si el usuario está dado de baja',
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabla en la que se guardan los usuarios de la aplicación'$$
+
+
 delimiter $$
 
 CREATE TABLE `sessions` (
@@ -41,14 +51,3 @@ CREATE TABLE `user_settings` (
   KEY `fk_tuprofile_cuser_id_idx` (`USER_ID`),
   CONSTRAINT `fk_tuprofile_cuser_id` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
-
-
-delimiter $$
-
-CREATE TABLE `users` (
-  `USER_ID` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario',
-  `USER_IS_OFF` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Indica si el usuario está dado de baja',
-  PRIMARY KEY (`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabla en la que se guardan los usuarios de la aplicación'$$
-
-

@@ -266,8 +266,8 @@ function showPosition(divId){
  * @param position
  */
 function mapMyPosition(divId, position){
-	latlon=position.coords.latitude+","+position.coords.longitude;
-	img_url="http://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false";
+	var latlon = position.coords.latitude+","+position.coords.longitude;
+	var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false";
 	
 	document.getElementById(divId).innerHTML="<img src='"+img_url+"'>";
 }
@@ -275,10 +275,6 @@ function mapMyPosition(divId, position){
 /**************************************
  * FIN - FUNCIONES DE GEOLOCALIZACION
  **************************************/
-
-
-
-
 
 
 
@@ -415,4 +411,28 @@ function isValidImageURL(url, callback) {
     img.onerror = function() { callback(url, false); };
     img.onload =  function() { callback(url, true); };
     img.src = url;
+}
+
+function sendFormThroughAjax(formId){
+	//callback handler for form submit
+	$("#"+formId).submit(function(e) {
+	    var postData = $(this).serializeArray();
+	    var formURL = $(this).attr("action");
+	    $.ajax({
+	        url : formURL,
+	        type: "POST",
+	        data : postData,
+	        success:function(data, textStatus, jqXHR) {
+	            console.log("success");
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	            console.log("error");      
+	        }
+	    });
+	    
+	    e.preventDefault(); //STOP default action
+	    e.unbind(); //unbind. to stop multiple form submit.
+	});
+
+	$("#"+formId).submit(); //Submit  the FORM
 }

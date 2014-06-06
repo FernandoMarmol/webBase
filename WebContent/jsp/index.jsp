@@ -1,6 +1,7 @@
 <%@ taglib uri="languageTLD" prefix="language" %>
 <%@ taglib uri="htmlBuilderTLD" prefix="htmlBuilder" %>
 
+<%@ page import="eu.fmm.sw.servlets.UserServlet"%>
 <%@ page import="eu.fmm.sw.Constants"%>
 <%@ page import="eu.fmm.sw.ddbb.beans.User"%>
 
@@ -10,14 +11,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title><language:getMessage key="home.title"/></title>
 		
+		<!-- CSS -->
+		<link rel="stylesheet" href="./css/style.css" type="text/css"/>
+		
 		<!-- Javascript -->
 		<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.js"></script>
 		<script type="text/javascript" src="//cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
 		<script type="text/javascript" src="./js/common-functions.js"></script>
 		<script type="text/javascript" src="./js/init.js"></script>
 		
-		<!-- CSS -->
-		<link rel="stylesheet" href="./css/style.css" type="text/css"/>
 	</head>
 	<body>
 		<div id="bodyHeader">
@@ -28,7 +30,7 @@
 		<div id="bodyContent">
 			<%--Cuerpo --%>
 			
-			<htmlBuilder:form bean="<%=User.class%>" action="/RegisterUser"/>
+			<htmlBuilder:form bean="<%=new User()%>" action="<%=UserServlet.PATH_CREATE%>"/>
 			
 			<br>
 			<button class="buttonNormal" onclick="javascript:showMessage('<%=Constants.JS_AJAX_RESULT_INFO %>', $().jquery);">Versión Jquery</button>

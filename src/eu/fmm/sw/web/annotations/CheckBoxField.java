@@ -5,21 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Representa un campo de texto en un formulario
- * @author fmm
- *
- */
 @Target(value = ElementType.FIELD)
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface TextField {
+public @interface CheckBoxField {
 	
-	public String placeholder() default "";
+	public boolean defaultChecked() default false;
 	
-	public boolean isPassword() default false;
+	public boolean checked() default false;
 	
-	public int maxlength() default -1;
-	
-	public int size() default -1;
+	public String defaultValue();
 
 }

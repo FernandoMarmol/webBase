@@ -5,21 +5,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Representa un campo de texto en un formulario
- * @author fmm
- *
- */
 @Target(value = ElementType.FIELD)
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface TextField {
+public @interface CommonField {
 	
-	public String placeholder() default "";
+	public boolean disabled() default false;
 	
-	public boolean isPassword() default false;
+	public boolean required() default false;
 	
-	public int maxlength() default -1;
+	public boolean autofocus() default false;
 	
-	public int size() default -1;
+	public String value() default "";
+	
+	/**
+	 * label a mostrar junto con el campo.
+	 */
+	public String label() default "";
 
 }
