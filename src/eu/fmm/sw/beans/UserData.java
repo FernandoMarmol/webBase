@@ -11,6 +11,14 @@ import eu.fmm.sw.web.annotations.TextField;
 @TableDefinition(tableName = "user_data")
 public class UserData {
 
+	/**
+	 * id del usuario 
+	 * @param id
+	 */
+	public UserData(int id){
+		this.id = id;
+	}
+	
 	@ColumnDefinition(columnName = "user_id", dataType = DataTypes.INT, isPK = true, isFK = true, fkTableReference = User.class)
 	@NotFormField
 	private int id = -1;
@@ -35,7 +43,7 @@ public class UserData {
 	@TextField (placeholder = "user.email.placeholder")
 	private String email = "";
 	
-	@ColumnDefinition(columnName = "user_password")
+	@ColumnDefinition(columnName = "user_password", containsPassword = true)
 	@CommonField(required = true)
 	@TextField(isPassword = true, placeholder = "user.password.placeholder")
 	private String password = "";

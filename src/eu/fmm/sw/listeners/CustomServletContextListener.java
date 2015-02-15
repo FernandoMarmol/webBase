@@ -7,7 +7,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.ContextConstants;
 
 @WebListener
 public class CustomServletContextListener implements ServletContextListener {
@@ -26,11 +26,11 @@ public class CustomServletContextListener implements ServletContextListener {
 		
 		try{
 			ServletContext servletContext = servletContextEvent.getServletContext();
-			servletContext.setAttribute(Constants.DATA_SOURCE, ds);
+			servletContext.setAttribute(ContextConstants.DATA_SOURCE, ds);
 			
 			//Language parameter
-			String lp = servletContext.getInitParameter(Constants.LANG_PACKAGE);
-			servletContext.setAttribute(Constants.LANG_PACKAGE, lp);
+			String lp = servletContext.getInitParameter(ContextConstants.LANG_PACKAGE);
+			servletContext.setAttribute(ContextConstants.LANG_PACKAGE, lp);
 		}
 		catch(Exception e){
 			System.out.println("CustomServletContextListener - contextInitialized - ERROR DATASOURCE");

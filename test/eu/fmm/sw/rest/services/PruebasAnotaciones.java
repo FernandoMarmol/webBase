@@ -9,7 +9,7 @@ public class PruebasAnotaciones {
 
 	public static void main(String[] args) {
 
-		UserData user = new UserData();
+		UserData user = new UserData(1);
 		Field[] fields = user.getClass().getDeclaredFields();
 
 		for (Field field : fields) {

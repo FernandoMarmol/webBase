@@ -2,7 +2,8 @@
 <%@ taglib uri="htmlBuilderTLD" prefix="htmlBuilder" %>
 
 <%@ page import="eu.fmm.sw.servlets.UserServlet"%>
-<%@ page import="eu.fmm.sw.Constants"%>
+<%@ page import="eu.fmm.sw.beans.User"%>
+<%@ page import="eu.fmm.sw.AjaxConstants"%>
 <%@ page import="eu.fmm.sw.beans.UserData"%>
 
 <!DOCTYPE html>
@@ -30,10 +31,10 @@
 		<div id="bodyContent">
 			<%--Cuerpo --%>
 			
-			<htmlBuilder:form bean="<%=new UserData()%>" action="<%=UserServlet.PATH_CREATE%>"/>
+			<htmlBuilder:form bean="<%=new User()%>" action="<%=UserServlet.PATH_CREATE%>"/>
 			
 			<br>
-			<button class="buttonNormal" onclick="javascript:showMessage('<%=Constants.JS_AJAX_RESULT_INFO %>', $().jquery);">Versión Jquery</button>
+			<button class="buttonNormal" onclick="javascript:showMessage('<%=AjaxConstants.JS_AJAX_RESULT_INFO %>', $().jquery);">Versión Jquery</button>
 			
 			<div id="result" title="<language:getMessage key="result.message.help"/>" onmouseover="javascript:enlargeDivVertically(this.id, 250);"></div>
 			

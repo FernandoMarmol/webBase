@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.ContextConstants;
 import eu.fmm.sw.beans.UserData;
 import eu.fmm.sw.beans.UserSettings;
 import eu.fmm.sw.ddbb.MainManager;
@@ -20,12 +20,12 @@ public class UserManager extends MainManager {
 
 	public static UserManager getInstance(ServletContext servletContext) {
 		
-		UserManager userManager = (UserManager) servletContext.getAttribute(Constants.MANAGER_USER);
+		UserManager userManager = (UserManager) servletContext.getAttribute(ContextConstants.MANAGER_USER);
 		
 		synchronized (servletContext){
 			if(userManager == null){
-				userManager = new UserManager((DataSource) servletContext.getAttribute(Constants.DATA_SOURCE));
-				servletContext.setAttribute(Constants.MANAGER_USER, userManager);
+				userManager = new UserManager((DataSource) servletContext.getAttribute(ContextConstants.DATA_SOURCE));
+				servletContext.setAttribute(ContextConstants.MANAGER_USER, userManager);
 			}
 		}
 		
@@ -92,13 +92,13 @@ public class UserManager extends MainManager {
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.first()){
-				user = new UserData();
+				user = new UserData(rs.getInt("USER_ID"));
 				user.setId(rs.getInt("USER_ID"));
 				user.setName(rs.getString("USER_NAME"));
 				user.setSurname(rs.getString("USER_SURNAME"));
 				user.setEmail(rs.getString("USER_EMAIL"));
 				
-				UserSettings settings = new UserSettings();
+				UserSettings settings = new UserSettings(rs.getInt("USER_ID"));
 				
 				user.setSettings(settings);
 			}

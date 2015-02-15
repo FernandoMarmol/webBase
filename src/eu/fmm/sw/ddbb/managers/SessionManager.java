@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.ContextConstants;
 import eu.fmm.sw.ddbb.MainManager;
 
 public class SessionManager extends MainManager {
@@ -17,12 +17,12 @@ public class SessionManager extends MainManager {
 	
 	public static SessionManager getInstance(ServletContext servletContext) {
 		
-		SessionManager sessionManager = (SessionManager) servletContext.getAttribute(Constants.MANAGER_SESSION);
+		SessionManager sessionManager = (SessionManager) servletContext.getAttribute(ContextConstants.MANAGER_SESSION);
 		
 		synchronized (servletContext){
 			if(sessionManager == null){
-				sessionManager = new SessionManager((DataSource) servletContext.getAttribute(Constants.DATA_SOURCE));
-				servletContext.setAttribute(Constants.MANAGER_SESSION, sessionManager);
+				sessionManager = new SessionManager((DataSource) servletContext.getAttribute(ContextConstants.DATA_SOURCE));
+				servletContext.setAttribute(ContextConstants.MANAGER_SESSION, sessionManager);
 			}
 		}
 		

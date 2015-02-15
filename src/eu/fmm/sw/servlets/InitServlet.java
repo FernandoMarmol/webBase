@@ -7,7 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.SessionConstants;
+import eu.fmm.sw.beans.User;
 import eu.fmm.sw.common.beans.Message;
 import eu.fmm.sw.common.servlets.AbstractServlet;
 
@@ -25,10 +26,12 @@ public class InitServlet extends AbstractServlet {
 		
 		request.getSession();
 		
-		if(request.getSession().getAttribute(Constants.SESSION_USER) != null)
-			request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
-		else
-			request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		if(request.getSession().getAttribute(SessionConstants.SESSION_USER) == null){
+			User user = new User();
+			request.getSession().setAttribute(SessionConstants.SESSION_USER, user);
+		}
+		
+		request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
 		
 		return null;
 	}

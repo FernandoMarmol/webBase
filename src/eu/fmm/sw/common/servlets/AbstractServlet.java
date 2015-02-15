@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import eu.fmm.sw.Constants;
+import eu.fmm.sw.RequestConstants;
 import eu.fmm.sw.common.beans.Message;
 
 public abstract class AbstractServlet extends HttpServlet {
@@ -54,7 +54,7 @@ public abstract class AbstractServlet extends HttpServlet {
 			out.flush();
 		}
 		else{
-			request.setAttribute(Constants.MESSAGE, message);
+			request.setAttribute(RequestConstants.MESSAGE, message);
 			
 			if(message != null && message.getNextToDo() != null)
 				request.getRequestDispatcher(message.getNextToDo()).forward(request, response);

@@ -11,6 +11,8 @@ public @interface ColumnDefinition {
 	
 	public boolean isFK() default false;
 	
+	public boolean containsPassword() default false;
+	
 	public Class<?> fkTableReference() default None.class;
 	
 	/**

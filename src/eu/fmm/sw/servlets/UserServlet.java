@@ -1,7 +1,6 @@
 package eu.fmm.sw.servlets;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import eu.fmm.sw.beans.User;
 import eu.fmm.sw.common.beans.Message;
 import eu.fmm.sw.common.servlets.AbstractServlet;
-import eu.fmm.sw.ddbb.annotations.ColumnDefinition;
 import eu.fmm.sw.ddbb.sql.SqlBuilder;
-import eu.fmm.sw.web.annotations.NotFormField;
 
 /**
  * Servlet implementation class UserServlet
@@ -35,20 +32,13 @@ public class UserServlet extends AbstractServlet {
 		System.out.println("UserServlet - customExecute");
 		
 		if(PATH_CREATE.endsWith(request.getPathInfo())){
-			
-			Field[] fields = User.class.getDeclaredFields();
-
-			for (Field field : fields) {
-				
-				//Si el campo tiene anotaciones
-				if(field.getAnnotations().length > 0){
-					//Si no se debe ignorar el campo para el formulario
-					if(field.isAnnotationPresent(ColumnDefinition.class)){
-						//TODO:Continuar aqui
-					}
-				}
-				
-			}
+			SqlBuilder.generateInsert(User.class, request);
+		}
+		else if(PATH_UPDATE.endsWith(request.getPathInfo())){
+			SqlBuilder.generateUpdate(User.class, request);
+		}
+		else if(PATH_REMOVE.endsWith(request.getPathInfo())){
+			SqlBuilder.generateDelete(User.class, request);
 		}
 		
 		return null;
