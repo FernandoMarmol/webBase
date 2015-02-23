@@ -1,14 +1,6 @@
 package eu.fmm.sw.beans;
 
-import eu.fmm.sw.ddbb.DataTypes;
-import eu.fmm.sw.ddbb.annotations.ColumnDefinition;
-import eu.fmm.sw.ddbb.annotations.TableDefinition;
-import eu.fmm.sw.web.annotations.CheckBoxField;
-import eu.fmm.sw.web.annotations.CommonField;
-import eu.fmm.sw.web.annotations.HiddenField;
-import eu.fmm.sw.web.annotations.NotFormField;
 
-@TableDefinition(tableName = "users")
 public class User {
 	
 	public static int ANONYMOUS_USER_ID = -1;
@@ -19,6 +11,14 @@ public class User {
 	public User(){}
 	
 	/**
+	 * id del usuario 
+	 * @param id
+	 */
+	public User(int id){
+		setId(id);
+	}
+	
+	/**
 	 * Usarlo para el login del usuario
 	 * @param alias
 	 * @param password
@@ -27,28 +27,17 @@ public class User {
 		//TODO: Login
 	}
 	
-	@ColumnDefinition(columnName = "user_id", dataType = DataTypes.INT_AUTOINCREMENT, isPK = true)
-	@NotFormField
 	private int id = ANONYMOUS_USER_ID;
 	
-	@CommonField
-	@CheckBoxField(defaultValue = "ok")
 	private boolean userOff = false;
 	
-	@HiddenField
-	private boolean anonymous = true;
+	private UserData userData = new UserData();
 	
-	private UserData userData = new UserData(id);
-	
-	private UserSettings userSettings = new UserSettings(id);
+	private UserSettings userSettings = new UserSettings();
 
 	
 	public boolean isAnonymous() {
-		return anonymous;
-	}
-
-	public void setAnonymous(boolean anonymous) {
-		this.anonymous = anonymous;
+		return id == ANONYMOUS_USER_ID;
 	}
 
 	public int getId() {
@@ -57,6 +46,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isUserOff() {
+		return userOff;
+	}
+
+	public void setUserOff(boolean userOff) {
+		this.userOff = userOff;
 	}
 
 	public UserData getUserData() {

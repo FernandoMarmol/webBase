@@ -7,26 +7,31 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import eu.fmm.sw.beans.User;
 import eu.fmm.sw.common.beans.Message;
+import eu.fmm.sw.common.servlets.AbstractLoggedServlet;
 import eu.fmm.sw.common.servlets.AbstractServlet;
+import eu.fmm.sw.workers.SessionWorker;
 
 /**
- * Servlet implementation class InitServlet
+ * Servlet implementation class BranchRegistrationServlet
  */
-@WebServlet( name="InitServlet", displayName="Init Servlet", urlPatterns = {"/InitServlet"}, loadOnStartup=1 )
-public class InitServlet extends AbstractServlet {
-
-    /**
+@WebServlet( name="MainUserPageServlet", displayName="MainUserPage Servlet", urlPatterns = {"/MainUserPage"} )
+public class MainUserPageServlet extends AbstractLoggedServlet {
+	
+	/**
 	 * @see AbstractServlet#customExecute(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public Message customExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("InitServlet - customExecute");
 		
-		request.getRequestDispatcher("/jsp/layouts/home.jsp").forward(request, response);
+		User user = SessionWorker.getUser(request.getSession());
 		
-		return null;
+		Message message = new Message();
+		message.setNextToDo("/MainUserPageLayout");
+		
+		return message;
 	}
-
+	
 	@Override
 	public Message validate(HttpServletRequest request) {
 		return null;
@@ -35,12 +40,13 @@ public class InitServlet extends AbstractServlet {
 	@Override
 	public void destroy() {
 		super.destroy();
-		System.out.println("InitServlet - destroy()");
+		System.out.println("MainUserPageServlet - destroy()");
 	}
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		System.out.println("InitServlet - init()");
+		System.out.println("MainUserPageServlet - init()");
 	}
+	
 }

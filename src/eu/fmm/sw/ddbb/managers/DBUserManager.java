@@ -1,5 +1,6 @@
 package eu.fmm.sw.ddbb.managers;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,23 +9,23 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import eu.fmm.sw.ContextConstants;
+import eu.fmm.sw.beans.User;
 import eu.fmm.sw.beans.UserData;
-import eu.fmm.sw.beans.UserSettings;
 import eu.fmm.sw.ddbb.MainManager;
 
-public class UserManager extends MainManager {
+public class DBUserManager extends MainManager {
 	
-	public UserManager(DataSource ds) {
+	public DBUserManager(DataSource ds) {
 		super(ds);
 	}
 
-	public static UserManager getInstance(ServletContext servletContext) {
+	public static DBUserManager getInstance(ServletContext servletContext) {
 		
-		UserManager userManager = (UserManager) servletContext.getAttribute(ContextConstants.MANAGER_USER);
+		DBUserManager userManager = (DBUserManager) servletContext.getAttribute(ContextConstants.MANAGER_USER);
 		
 		synchronized (servletContext){
 			if(userManager == null){
-				userManager = new UserManager((DataSource) servletContext.getAttribute(ContextConstants.DATA_SOURCE));
+				userManager = new DBUserManager((DataSource) servletContext.getAttribute(ContextConstants.DATA_SOURCE));
 				servletContext.setAttribute(ContextConstants.MANAGER_USER, userManager);
 			}
 		}
@@ -44,16 +45,25 @@ public class UserManager extends MainManager {
 		
 		PreparedStatement stmt = null;
 		try {
-			String insert = "INSERT INTO users (USER_NAME, USER_EMAIL, USER_PWD) VALUES ('"+name+"', '"+email+"', sha1('"+pwd+"'))";
+			Connection con = getConnection(false);
 			
-			stmt = getPreparedStatement(insert);
+			String insert = "INSERT INTO users (USER_EMAIL, USER_PWD) VALUES ('"+email+"', sha1('"+pwd+"'))";
+			
+			stmt = con.prepareStatement(insert);
 			stmt.executeUpdate();
 			stmt.close();
 			
-			String insertProfile = "INSERT INTO users_settings (USER_ID) VALUES (SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "')";
+			String insertData= "INSERT INTO user_data (USER_ID, USER_ALIAS, USER_NAME) VALUES ((SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "'), '"+name+"', '"+name+"')";
 			
-			stmt = getPreparedStatement(insertProfile);
+			stmt = con.prepareStatement(insertData);
 			stmt.executeUpdate();
+			stmt.close();
+			
+			String insertSettings = "INSERT INTO user_settings (USER_ID) SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "'";
+			
+			stmt = con.prepareStatement(insertSettings);
+			stmt.executeUpdate();
+			
 			
 			registered = true;
 		}
@@ -62,6 +72,9 @@ public class UserManager extends MainManager {
 		}
 		finally{
 			try {
+				if(registered)
+					stmt.getConnection().commit();
+				
 				stmt.getConnection().close();
 				stmt.close();
 			}
@@ -78,29 +91,28 @@ public class UserManager extends MainManager {
 	 * @param pwd
 	 * @return - el usuario o null si no ha sido posible
 	 */
-	public UserData getUser(String email, String pwd){
-		UserData user = null;
+	public User getUser(String email, String pwd){
+		User user = new User();
+		UserData userData = null;
 		
 		PreparedStatement stmt = null;
 		try {
 			String select = 
-			" SELECT users.USER_ID, USER_NAME, USER_EMAIL  " +  
-			" FROM users left outer join users_settings on users.USER_ID = users_settings.USER_ID " +
-			" WHERE USER_EMAIL = '" + email + "' AND USER_PWD = sha1('" + pwd + "') ";
+			" SELECT users.USER_ID, users.USER_IS_OFF, users.USER_EMAIL, user_data.USER_NAME " +  
+			" FROM users left outer join user_settings on users.USER_ID = user_settings.USER_ID " +
+			" left outer join user_data on users.USER_ID = user_data.USER_ID " +
+			" WHERE users.USER_EMAIL = '" + email + "' AND users.USER_PWD = sha1('" + pwd + "') ";
 			
 			stmt = getPreparedStatement(select);
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.first()){
-				user = new UserData(rs.getInt("USER_ID"));
-				user.setId(rs.getInt("USER_ID"));
-				user.setName(rs.getString("USER_NAME"));
-				user.setSurname(rs.getString("USER_SURNAME"));
-				user.setEmail(rs.getString("USER_EMAIL"));
-				
-				UserSettings settings = new UserSettings(rs.getInt("USER_ID"));
-				
-				user.setSettings(settings);
+				user = new User(rs.getInt("USER_ID"));
+				user.setUserOff((rs.getInt("USER_IS_OFF") == 1)?true:false);
+				userData = user.getUserData();
+				userData.setName(rs.getString("USER_NAME"));
+				userData.setSurname(rs.getString("USER_SURNAME"));
+				userData.setEmail(rs.getString("USER_EMAIL"));
 			}
 		}
 		catch (SQLException e) {

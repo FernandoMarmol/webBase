@@ -13,6 +13,10 @@ import com.google.gson.Gson;
 import eu.fmm.sw.RequestConstants;
 import eu.fmm.sw.common.beans.Message;
 
+/**
+ * @author fmm
+ *
+ */
 public abstract class AbstractServlet extends HttpServlet {
 
 	public static final String METHOD_GET = "GET";
@@ -52,6 +56,11 @@ public abstract class AbstractServlet extends HttpServlet {
 			Gson gson = new Gson();
 			out.print(gson.toJson(message));
 			out.flush();
+			
+			// Assuming your json object is **jsonObject**, perform the following, it will return your json object  
+			/*out.print("{ \"resultMessage\" : \""+resultMessage+"\"," +
+						"\"highlightField\" : \""+highlightField+"\"," +
+					    "\"type\" : \"" + ajaxResultType + "\" }");*/
 		}
 		else{
 			request.setAttribute(RequestConstants.MESSAGE, message);
@@ -71,5 +80,5 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * @return - Message Error en caso de haberlo o null si no lo hay 
 	 */
 	public abstract Message validate(HttpServletRequest request);
-	
+
 }

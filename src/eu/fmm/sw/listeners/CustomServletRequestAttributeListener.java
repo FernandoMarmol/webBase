@@ -5,8 +5,7 @@ import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class CustomServletRequestAttributeListener implements
-		ServletRequestAttributeListener {
+public class CustomServletRequestAttributeListener implements ServletRequestAttributeListener {
 
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent arg0) {
