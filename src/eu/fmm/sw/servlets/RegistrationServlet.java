@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import eu.fmm.sw.AjaxConstants;
@@ -33,10 +34,11 @@ public class RegistrationServlet extends AbstractServlet {
 		message.setDescription(LanguageWorker.getMessage("registration.message.error.general"));
 		
 		String name = request.getParameter("name");
+		String alias = request.getParameter("alias");
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("pwd");
 		
-		boolean registered = DBUserManager.getInstance(getServletContext()).registerUser(name, email, pwd);
+		boolean registered = DBUserManager.getInstance(getServletContext()).registerUser(name, alias, email, pwd);
 		
 		if(registered){
 			
@@ -63,12 +65,12 @@ public class RegistrationServlet extends AbstractServlet {
 		Message message = null;
 		
 		try{
+			String alias = request.getParameter("alias");
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String pwd = request.getParameter("pwd");
 			
-			
-			if(name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || pwd.equalsIgnoreCase("")){
+			if(StringUtils.isEmpty(alias) || StringUtils.isEmpty(name) || StringUtils.isEmpty(email) || StringUtils.isEmpty(pwd)){
 				message = new Message(true);
 				message.setDescription(LanguageWorker.getMessage("registration.message.emptydata"));
 				message.setMessageType(AjaxConstants.JS_AJAX_RESULT_INFO);

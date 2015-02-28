@@ -40,7 +40,7 @@ public class DBUserManager extends MainManager {
 	 * @param pwd
 	 * @return - true o false en funci�n de si se ha podido o no crear el usuario
 	 */
-	public boolean registerUser(String name, String email, String pwd){
+	public boolean registerUser(String name, String alias, String email, String pwd){
 		boolean registered = false;
 		
 		PreparedStatement stmt = null;
@@ -53,7 +53,7 @@ public class DBUserManager extends MainManager {
 			stmt.executeUpdate();
 			stmt.close();
 			
-			String insertData= "INSERT INTO user_data (USER_ID, USER_ALIAS, USER_NAME) VALUES ((SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "'), '"+name+"', '"+name+"')";
+			String insertData= "INSERT INTO user_data (USER_ID, USER_ALIAS, USER_NAME) VALUES ((SELECT USER_ID FROM users WHERE USER_EMAIL LIKE '" + email + "'), '"+alias+"', '"+name+"')";
 			
 			stmt = con.prepareStatement(insertData);
 			stmt.executeUpdate();

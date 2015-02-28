@@ -25,7 +25,7 @@
 			async: true,
 			type: "POST",
 			url: "Login",
-			data: { isAjax: "true", email: document.LoginForm.emailLogin.value, pwd: document.LoginForm.pwdLogin.value },
+			data: { isAjax: "true", email: document.LoginForm.LoginEmail.value, pwd: document.LoginForm.loginPwd.value },
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			dataType: "json",
 			success: function (data) { taskComplete(); showResult("loginDiv", "loginButton", data, true); },
@@ -59,12 +59,15 @@
 		
 		<form action="LoginServlet" name="LoginForm" method="post">
 		
-			<input type="text" name="emailLogin" id="emailLogin" placeholder="<language:getMessage key="login.email"/>"/>
-			<input type="password" name="pwdLogin" id="pwdLogin" placeholder="<language:getMessage key="login.pwd"/>" onkeypress="javascript:executeLogin(event);"/>
+			<input type="text" name="LoginEmail" id="loginEmail" placeholder="<language:getMessage key="login.email"/>"/>
+			<input type="password" name="loginPwd" id="loginPwd" placeholder="<language:getMessage key="login.pwd"/>" onkeypress="javascript:executeLogin(event);"/>
 		
 			<button type="button" id="loginButton" onclick="javascript:loginUser();" draggable="true"><language:getMessage key="login.button.send"/></button>
 			
 			<div id="noRegisteredDiv"><span class="subText">¿No tiene cuenta y desea registrarse?</span>&nbsp;<button type="button" class="subButton" id="regButton" onclick="javascript:showRegistration();" draggable="true"><language:getMessage key="registration.button"/></button></div>
+			
+			<br/><br>
+			
 			<div id="loadFunctionality" style="display: none;"></div>
 		</form>
 	<%}

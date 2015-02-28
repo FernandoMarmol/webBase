@@ -18,7 +18,7 @@
 			async: true,
 			type: "POST",
 			url: "Registration",
-			data: { isAjax: "true", name: document.RegistrationForm.name.value, email: document.RegistrationForm.email.value, pwd: document.RegistrationForm.pwd.value },
+			data: { isAjax: "true", name: document.RegistrationForm.name.value, email: document.RegistrationForm.email.value, pwd: document.RegistrationForm.pwd.value, alias:  document.RegistrationForm.alias.value},
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			dataType: "json",
 			success: function (data) { taskComplete(); showResult("registryDiv", "regButton", data, false); },
@@ -30,7 +30,7 @@
 		
 		
 <!-- Capa de registro -->
-<div id="registryDiv" class="form1 minWidth700px">
+<div id="registryDiv" class="form1 minWidth500px">
 
 	<label><language:getMessage key="registration.title"/></label>
 	
@@ -39,12 +39,16 @@
 	<form action="Registration" name="RegistrationForm" method="post" style="position: relative;">
 	
 		<input type="text" name="name" id="name" placeholder="<language:getMessage key="registration.name"/>"/>
+		<input type="text" name="alias" id="alias" placeholder="<language:getMessage key="registration.alias"/>"/>
+		<br/>
 		<input type="text" name="email" id="email" placeholder="<language:getMessage key="registration.email"/>"/>
 		<input type="password" name="pwd" id="pwd" placeholder="<language:getMessage key="registration.pwd"/>" onkeypress="javascript:executeRegistration(event);"/>
 	
 		<button type="button" id="regButton" onclick="javascript:registerUser();" draggable="true"><language:getMessage key="registration.button.send"/></button>
 		
 	</form>
+	
+	<%@include file="/jsp/layouts/common/result.jsp" %>
 	
 </div>
 <!-- Fin de la capa de registro -->

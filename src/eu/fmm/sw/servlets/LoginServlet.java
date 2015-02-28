@@ -38,7 +38,7 @@ public class LoginServlet extends AbstractServlet {
 		String pwd = request.getParameter("pwd");
 		
 		User user = DBUserManager.getInstance(getServletContext()).getUser(email, pwd);
-		if(user != null){
+		if(!user.isAnonymous()){
 			message.setMessageType(AjaxConstants.JS_AJAX_RESULT_SUCCESS);
 			message.setDescription(LanguageWorker.getMessage("login.message.success"));
 			
@@ -51,7 +51,7 @@ public class LoginServlet extends AbstractServlet {
 		else{
 			message.setMessageType(AjaxConstants.JS_AJAX_RESULT_ERROR);
 			message.setDescription(LanguageWorker.getMessage("login.message.error"));
-			message.setRelatedField("emailLogin");
+			message.setRelatedField("loginEmail");
 		}
 		
 		return message;
@@ -69,14 +69,14 @@ public class LoginServlet extends AbstractServlet {
 				message = new Message(true);
 				message.setDescription(LanguageWorker.getMessage("login.message.emptydata"));
 				message.setMessageType(AjaxConstants.JS_AJAX_RESULT_INFO);
-				message.setRelatedField("emailLogin");
+				message.setRelatedField("loginEmail");
 			}
 			
 			if(message == null && !EmailValidator.getInstance().isValid(email)){
 				message = new Message(true);
 				message.setDescription(LanguageWorker.getMessage("login.message.error.email"));
 				message.setMessageType(AjaxConstants.JS_AJAX_RESULT_ERROR);
-				message.setRelatedField("emailLogin");
+				message.setRelatedField("loginEmail");
 			}
 		}
 		catch(Exception e){}

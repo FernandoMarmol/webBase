@@ -32,6 +32,16 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 	
+	<!-- LAYOUTS -->
+	<servlet>
+		<servlet-name>HomeLayout</servlet-name>
+		<jsp-file>/jsp/layouts/home.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HomeLayout</servlet-name>
+		<url-pattern>/HomeLayout</url-pattern>
+	</servlet-mapping>
+	
 	<!-- FUNCTIONALITIES -->
 	<servlet>
 		<servlet-name>UserInfoJSP</servlet-name>

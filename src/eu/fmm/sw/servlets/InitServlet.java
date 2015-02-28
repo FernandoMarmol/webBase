@@ -22,7 +22,7 @@ public class InitServlet extends AbstractServlet {
 	public Message customExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("InitServlet - customExecute");
 		
-		request.getRequestDispatcher("/jsp/layouts/home.jsp").forward(request, response);
+		request.getRequestDispatcher("HomeLayout").forward(request, response);
 		
 		return null;
 	}
